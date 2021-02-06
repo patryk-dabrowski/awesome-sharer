@@ -1,6 +1,7 @@
 from django.contrib import admin
 from django import forms
 
+from .generator import Generator
 from .models import Resource
 
 
@@ -14,7 +15,9 @@ class ResourceAdminForm(forms.ModelForm):
     def clean_plain_password(self):
         plain_password = self.cleaned_data['plain_password']
         if plain_password is not None:
-            self.instance.plain_password = plain_password
+            self.instance.set_password(plain_password)
+        elif not self.instance.password:
+            self.instance.set_password(Generator.generate(5))
         return plain_password
 
 

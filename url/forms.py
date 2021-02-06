@@ -1,5 +1,6 @@
 from django import forms
 from django.core.exceptions import ValidationError
+
 from .models import Resource
 
 
@@ -10,11 +11,6 @@ class ResourceForm(forms.ModelForm):
     class Meta:
         model = Resource
         fields = ('file', 'url',)
-
-    def __init__(self, *args, **kwargs):
-        super().__init__(*args, **kwargs)
-        self.instance.plain_password = "testowe"
-        self.instance.slug_url = "testowe2222"
 
     def clean(self):
         cleaned_data = super().clean()

@@ -6,15 +6,10 @@ ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
 
 RUN apk update \
-    && apk add --virtual build-deps gcc python3-dev musl-dev \
+    && apk add --virtual build-deps gcc python3-dev musl-dev libffi-dev \
     && apk add postgresql-dev \
-    && pip install psycopg2 \
+    && pip install psycopg2 bcrypt \
     && apk del build-deps
-
-
-# install pillow dependencies
-#RUN apk add build-base python-dev py-pip jpeg-dev zlib-dev
-#ENV LIBRARY_PATH=/lib:/usr/lib
 
 RUN apk --update add postgresql-client
 

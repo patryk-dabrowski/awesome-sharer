@@ -22,6 +22,8 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = os.environ.get('SECRET_KEY', ')z!jo^x&!5#b!xg9+39oz^21$iakuc8fb#mc#*=&01o7#b^4ab'),
 
+BCRYPT_SALT = os.environ.get('BCRYPT_SALT', '$2b$12$BSeTUCjVim9DUMmq0tUPmu')
+
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
