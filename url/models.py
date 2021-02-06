@@ -27,3 +27,10 @@ class Resource(models.Model):
 
     def check_password(self, password: str) -> bool:
         return Crypter(password).equals(self.password)
+
+    def redirect_to(self) -> str:
+        if self.url is not None:
+            return self.url
+        elif self.file is not None:
+            return self.file.url
+        return ''
