@@ -4,10 +4,18 @@
 
 {% block content %}
     {% if user.is_authenticated %}
-        Hi {{ user.username }}!
-        <p><a href="{% url 'logout' %}">Log Out</a></p>
-    {% else %}
-        <p>You are not logged in</p>
-        <a href="{% url 'login' %}">Log In</a>
+        Hi {{ user.username }}! <a href="{% url 'logout' %}">Log Out</a>
+
+        {% if form %}
+            <form method="post" id="resource-form" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{ form.as_p }}
+                <input type="submit" value="Send">
+            </form>
+        {% endif %}
+        {% if data %}
+            <p>Url: <a href="{{ data.slug_url }}" target="_blank">{{ data.slug_url }}</a></p>
+            <p>Password: {{ data.password }}</p>
+        {% endif %}
     {% endif %}
 {% endblock %}
