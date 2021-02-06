@@ -3,9 +3,13 @@
 {% block title %}Home{% endblock %}
 
 {% block content %}
-    <form method="post">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <input type="submit" value="Send">
-    </form>
+    {% if is_available %}
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <input type="submit" value="Send">
+        </form>
+    {% else %}
+        <p>Link expired</p>
+    {% endif %}
 {% endblock %}

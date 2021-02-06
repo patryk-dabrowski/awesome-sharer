@@ -37,6 +37,14 @@ class ShareView(ModelFormMixin, DetailView):
     def get_success_url(self):
         return self.object.redirect_to()
 
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        self.object = self.get_object()
+        context.update({
+            "is_available": self.object.is_available()
+        })
+        return context
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()

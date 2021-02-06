@@ -18,9 +18,11 @@ class Resource(models.Model):
     def __str__(self):
         return f"{self.slug_url} ({self.author})"
 
-    def clean(self):
+    def save(self, force_insert=False, force_update=False, using=None,
+             update_fields=None):
         if not self.expired_at:
             self.expired_at = timezone.now() + timezone.timedelta(hours=24)
+        super().save(force_insert, force_update, using, update_fields)
 
     def set_password(self, value: str):
         self.password = Crypter(value).encrypt()
@@ -34,3 +36,8 @@ class Resource(models.Model):
         elif self.file is not None:
             return self.file.url
         return ''
+
+    def is_available(self, time=None):
+        if not time:
+            time = timezone.now()
+        return self.expired_at > time
