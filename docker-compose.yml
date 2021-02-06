@@ -26,3 +26,8 @@ services:
       - POSTGRES_USER=awesomesharer
       - POSTGRES_PASSWORD=awesomesharer
       - POSTGRES_DB=awesomesharer
+    volumes:
+    - db_volume:/var/lib/postgresql/data
+
+volumes:
+  db_volume:
