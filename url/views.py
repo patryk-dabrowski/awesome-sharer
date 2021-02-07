@@ -5,6 +5,7 @@ from django.views.generic.edit import ModelFormMixin
 from url.forms import ResourceForm, ShareResourceForm
 from url.generator import Generator
 from url.models import Resource
+from url.signals import update_user_meta
 
 
 class HomeView(FormView):
@@ -19,6 +20,7 @@ class HomeView(FormView):
         form.instance.set_password(plain_password)
         instance = form.save()
 
+        update_user_meta.send(sender=self.__class__, request=self.request)
         data = {
             "slug_url": self.request.build_absolute_uri(reverse('share', args=[instance.slug_url])),
             "password": plain_password,
