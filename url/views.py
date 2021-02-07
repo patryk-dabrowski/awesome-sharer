@@ -45,6 +45,10 @@ class ShareView(ModelFormMixin, DetailView):
         })
         return context
 
+    def form_valid(self, form):
+        self.object.increment_visits()
+        return super().form_valid(form)
+
     def post(self, request, *args, **kwargs):
         self.object = self.get_object()
         form = self.get_form()

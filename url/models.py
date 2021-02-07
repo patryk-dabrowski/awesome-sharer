@@ -14,8 +14,9 @@ class Resource(models.Model):
     password = models.CharField(max_length=128)
     created_at = models.DateTimeField(default=timezone.now)
     expired_at = models.DateTimeField(blank=True)
+    visits = models.IntegerField(default=0)
 
-    def __str__(self):
+    def __str__(self) -> str:
         return f"{self.slug_url} ({self.author})"
 
     def save(self, force_insert=False, force_update=False, using=None,
@@ -37,7 +38,11 @@ class Resource(models.Model):
             return self.file.url
         return ''
 
-    def is_available(self, time=None):
+    def is_available(self, time=None) -> bool:
         if not time:
             time = timezone.now()
         return self.expired_at > time
+
+    def increment_visits(self):
+        self.visits += 1
+        self.save()

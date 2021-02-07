@@ -14,6 +14,9 @@ class ShareViewTest(TestCase):
             "url": "https://example.com"
         }
         self.resource = Resource.objects.create(**data)
+        self.password = "test"
+        self.resource.set_password(self.password)
+        self.resource.save()
 
     def test_when_link_expired_should_show_link_expired_message(self):
         self.resource.expired_at = timezone.now() - timezone.timedelta(hours=1)
@@ -29,3 +32,20 @@ class ShareViewTest(TestCase):
 
         self.assertEqual(response.status_code, 200)
         self.assertContains(response, "Write a password")
+
+    def test_when_pass_correct_password_should_redirect_to_following_path(self):
+        response = self.client.post(reverse('share', args=[self.resource.slug_url]), {"plain_password": self.password})
+
+        self.assertRedirects(response, "https://example.com", fetch_redirect_response=False)
+
+    def test_when_pass_incorrect_password_should_show_error(self):
+        response = self.client.post(reverse('share', args=[self.resource.slug_url]), {"plain_password": "test2"})
+
+        self.assertEqual(response.status_code, 200)
+        self.assertContains(response, "Password doesn")
+
+    def test_when_pass_correct_password_visit_counter_should_be_incremented(self):
+        self.client.post(reverse('share', args=[self.resource.slug_url]), {"plain_password": self.password})
+
+        self.resource.refresh_from_db()
+        self.assertTrue(self.resource.visits > 0)

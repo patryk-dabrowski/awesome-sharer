@@ -28,6 +28,7 @@ class ShareResourceForm(forms.ModelForm):
 
     def clean(self):
         cleaned_data = super().clean()
-        if not self.instance.check_password(cleaned_data.get('plain_password')):
+        plain_password = cleaned_data.get('plain_password')
+        if plain_password and not self.instance.check_password(plain_password):
             raise ValidationError({'plain_password': "Password doesn't match :("})
         return cleaned_data
