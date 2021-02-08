@@ -1,7 +1,11 @@
+from collections import defaultdict
+
+from django.db.models import Count
 from django.urls import reverse
 from rest_framework import generics, viewsets, mixins, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
+from rest_framework.views import APIView
 from rest_framework.viewsets import ModelViewSet
 
 from url.generator import Generator
@@ -43,3 +47,23 @@ class ShareViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     queryset = Resource.objects.all()
     serializer_class = ShareResourceSerializer
     permission_classes = (IsPermitted,)
+
+
+class StatisticAPIView(APIView):
+    permission_classes = (IsAuthenticated,)
+
+    def get(self, *args, **kwargs):
+        resources = (Resource.objects.filter(author=self.request.user, visits__gt=0)
+                     .values('created_at', 'file', 'url')
+                     .order_by('created_at'))
+        data = defaultdict(lambda: {"files": 0, "links": 0})
+        for resource in resources:
+            created_at = resource.get('created_at').strftime('%Y-%m-%d')
+            file = resource.get('file')
+            url = resource.get('url')
+            if file:
+                data[created_at]['files'] += 1
+            if url:
+                data[created_at]['links'] += 1
+
+        return Response(data)
