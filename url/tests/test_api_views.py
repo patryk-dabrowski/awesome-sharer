@@ -1,11 +1,11 @@
 from django.contrib.auth import get_user_model
 from django.core.files.uploadedfile import SimpleUploadedFile
-from django.test import TestCase
+from rest_framework.test import APITestCase
 
 from url.models import Resource
 
 
-class ResourceViewSetTest(TestCase):
+class ResourceViewSetTest(APITestCase):
     def setUp(self) -> None:
         self.user = get_user_model().objects.create(username='test_user')
 
@@ -13,7 +13,7 @@ class ResourceViewSetTest(TestCase):
         payload = {}
         response = self.client.post('/api/resource/', payload, format='multipart')
 
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
     def test_create_new_resource_without_params_should_raise_error(self):
         self._login_user()
@@ -48,24 +48,24 @@ class ResourceViewSetTest(TestCase):
         self.assertTrue(Resource.objects.count() > 0)
 
     def _login_user(self):
-        self.client.force_login(self.user)
+        self.client.force_authenticate(user=self.user)
 
 
-class ShareViewSetTest(TestCase):
+class ShareViewSetTest(APITestCase):
     def test_fetch_protected_resource_with_invalid_password_should_raise_error(self):
         user = get_user_model().objects.create(username='test_user')
 
         data = {
             "author": user,
             "url": "https://example.com",
-            "slug_url": "codes",
+            "slug_url": "codescodes",
         }
         resource = Resource(**data)
         resource.set_password("test")
         resource.save()
 
         response = self.client.get(f'/api/share/{resource.slug_url}/', {"password": "test2"})
-        self.assertEqual(response.status_code, 403)
+        self.assertEqual(response.status_code, 401)
 
     def test_fetch_protected_resource(self):
         user = get_user_model().objects.create(username='test_user')

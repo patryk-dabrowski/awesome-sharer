@@ -43,13 +43,14 @@ DJANGO_INSTALLED_APPS = [
 
 THIRD_PARTY_INSTALLED_APPS = [
     'rest_framework',
+    'rest_framework.authtoken',
 ]
-OWN_INSTALLED_APPS = [
+LOCAL_INSTALLED_APPS = [
     'url',
     'user_profile',
 ]
 
-INSTALLED_APPS = DJANGO_INSTALLED_APPS + THIRD_PARTY_INSTALLED_APPS + OWN_INSTALLED_APPS
+INSTALLED_APPS = DJANGO_INSTALLED_APPS + THIRD_PARTY_INSTALLED_APPS + LOCAL_INSTALLED_APPS
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -114,6 +115,12 @@ AUTH_PASSWORD_VALIDATORS = [
         'NAME': 'django.contrib.auth.password_validation.NumericPasswordValidator',
     },
 ]
+
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',  # <-- And here
+    ],
+}
 
 
 # Internationalization

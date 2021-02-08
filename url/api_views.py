@@ -38,7 +38,7 @@ class ResourceViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):
 
 class ShareViewSet(mixins.RetrieveModelMixin, viewsets.GenericViewSet):
     lookup_field = 'slug_url'
-    lookup_value_regex = '[0-9a-zA-Z]{5}'
+    lookup_value_regex = '[0-9a-zA-Z]{10}'
     lookup_url_kwarg = 'slug_url'
     queryset = Resource.objects.all()
     serializer_class = ShareResourceSerializer
