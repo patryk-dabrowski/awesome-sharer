@@ -6,10 +6,10 @@ run:						## Run application
 stop:						## Stop application
 	docker-compose down
 
-build:						## Build application
+build: migrate collectstatic			## Build application, apply migration, collect static
 	docker-compose build
 
-rebuild: purge build migrate collectstatic	## Fresh build, apply migration, collect static
+rebuild: purge build				## Fresh build
 
 test:						## Run tests
 	docker-compose run --rm web python manage.py test

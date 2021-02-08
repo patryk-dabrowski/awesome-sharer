@@ -1,5 +1,5 @@
-from django.contrib import admin
 from django import forms
+from django.contrib import admin
 
 from .generator import Generator
 from .models import Resource

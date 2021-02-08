@@ -1,0 +1,153 @@
+{
+	"info": {
+		"_postman_id": "529c7e06-409c-4996-bd14-b0669773f10b",
+		"name": "Awesome-sharer",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Generate statistics",
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "bearer",
+					"bearer": [
+						{
+							"key": "token",
+							"value": "",
+							"type": "string"
+						}
+					]
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token a2a153c9cb8c74d593a81729886ccb9f3a5073af",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": []
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/statistics/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"statistics",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Generate token",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\n    \"username\": \"root\",\n    \"password\": \"root\"\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8000/token-auth/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"token-auth",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create a new resource",
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Token a2a153c9cb8c74d593a81729886ccb9f3a5073af",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "formdata",
+					"formdata": [
+						{
+							"key": "url",
+							"value": "https://example.com",
+							"type": "text",
+							"disabled": true
+						},
+						{
+							"key": "file",
+							"type": "file",
+							"src": "/Users/pdabrowski/Documents/3-praktyki-skutecznej-nauki-frontendu.pdf"
+						}
+					]
+				},
+				"url": {
+					"raw": "http://localhost:8000/api/resource/",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"resource",
+						""
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Access to protected resource",
+			"request": {
+				"method": "GET",
+				"header": [],
+				"url": {
+					"raw": "http://localhost:8000/api/share/uFc5ceemXy?password=5CBOu",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8000",
+					"path": [
+						"api",
+						"share",
+						"uFc5ceemXy"
+					],
+					"query": [
+						{
+							"key": "password",
+							"value": "5CBOu"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	],
+	"protocolProfileBehavior": {}
+}

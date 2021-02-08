@@ -1,17 +1,15 @@
 from collections import defaultdict
 
-from django.db.models import Count
 from django.urls import reverse
-from rest_framework import generics, viewsets, mixins, status
+from rest_framework import viewsets, mixins, status
 from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from rest_framework.viewsets import ModelViewSet
 
 from url.generator import Generator
 from url.models import Resource
 from url.permissions import IsPermitted
-from url.serializers import ResourceSerializer, ResourceDetailSerializer, ShareResourceSerializer
+from url.serializers import ResourceSerializer, ShareResourceSerializer
 
 
 class ResourceViewSet(mixins.CreateModelMixin, viewsets.GenericViewSet):

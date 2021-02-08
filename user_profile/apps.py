@@ -5,4 +5,4 @@ class UserProfileConfig(AppConfig):
     name = 'user_profile'
 
     def ready(self):
-        from . import receivers
+        pass
