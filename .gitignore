@@ -4,5 +4,7 @@
 *.pyc
 __pycache__/
 media
-
+static
+staticfiles
 .idea
+*.sqlite3

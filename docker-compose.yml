@@ -12,6 +12,7 @@ services:
       - 8000:8000
     environment:
       - SECRET_KEY=foo
+      - DEBUG=1
       - SQL_ENGINE=django.db.backends.postgresql
       - SQL_DATABASE=awesomesharer
       - SQL_USER=awesomesharer
