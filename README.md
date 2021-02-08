@@ -30,6 +30,12 @@ help:              Show this help.
 ```
 
 ## Live preview
+* **URL**
+  [`https://awesome-sharer.herokuapp.com`](https://awesome-sharer.herokuapp.com)
+* **Credentials**
+  * **Login:** john.doe
+  * **Password:** john.doe123
+    
 
 ## Postman collection
 [link](Awesome-sharer.postman_collection.json)
