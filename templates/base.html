@@ -9,5 +9,25 @@
     {% block content %}
     {% endblock %}
 </main>
+
+<script>
+  const fileInput = document.querySelector('#id_file');
+  const urlInput = document.querySelector('#id_url');
+
+  (() => {
+    function changeFile(e) {
+      urlInput.parentElement.style.display = e.target.files.length ? 'none' : '';
+    }
+
+    function changeUrl(e) {
+      fileInput.parentElement.style.display = e.target.value.length ? 'none': '';
+    }
+
+    if (fileInput && urlInput) {
+      fileInput.addEventListener('change', changeFile);
+      urlInput.addEventListener('change', changeUrl);
+    }
+  })();
+</script>
 </body>
 </html>
